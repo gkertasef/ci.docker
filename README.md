@@ -17,7 +17,6 @@
 
 ## Container Images
 
-
 1. **Supported Images**
     *  Our recommended set uses Red Hat's [Universal Base Image (UBI)](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image) as the Operating System and are rebuilt periodically. They are available from IBM Container Registry (icr.io) and are listed [here](docs/icr-images.md).
     *  Another set, using Ubuntu as the Operating System, can be found on [Docker Hub](https://hub.docker.com/_/open-liberty).
