@@ -2,6 +2,69 @@ type: pipeline_definition
 name: Testing SPS PR Pipeline
 description: "Runs a set of compliance status checks for the gkertasef/ci.docker app repo."
 triggers:
-- type: github
-  keyword: "!gk-pr"
+- type: Manual
   triggerName: "gkSPSViaPR"
+  groups: ["LibertyContainersPersonal"]
+  propertyDefinitions:
+  - name: appRepoBranch
+    defaultValue: main
+    steps:
+    - stepName: olc_pr
+  - name: prNumber
+  - name: VERSIONS
+    defaultValue: latest
+  - name: pipeline-config-repo
+    defaultValue: https://github.ibm.com/websphere-sps/liberty-pipeline-config.git
+  - name: pipeline-config-branch
+    defaultValue: main
+  - name: app-repo
+    defaultValue: "https://github.com/gkertasef/ci.docker.git"
+  - name: LIBERTY_BUILD_LABEL
+    defaultValue: "cl251120251020-0302"
+  - name: LIBERTY_VERSION
+    defaultValue: "25.0.0.11"
+  - name: LIBERTY_VERSION_BETA
+    defaultValue: "25.0.0.12-beta"
+  - name: LIBERTY_DOWNLOAD_URL
+    defaultValue: "https://libfsfe05.hursley.ibm.com/liberty/dev/Xo/release/cl251120251020-0302-_l96-UK1YEfCzyYK7C22-FA/fe/cl251120251020-0302.02.linux/linux/zipper/externals/installables"
+
+steps:
+- stepName: olc_pr
+  workType: One Pipeline
+  projectName: "Test PR"
+  timeoutInMinutes: 1440
+  properties:
+    onepipeline_toolchainName: ci-toolchain-openliberty-container
+    onepipeline_pipelineName: pr-pipeline
+    branch: ${appRepoBranch}
+    prNumber: ${prNumber}
+    VERSIONS: ${VERSIONS}
+    pipeline-config: liberty-containers.one-pipeline-pr.yaml
+    #Disable git status checks for external contributor as we arent ready to publish them yet.
+    opt-out-ci-set-commit-status: 1
+- stepName: ARM Build
+  workType: Jenkins
+  projectName: libertyContainersBuilder
+  timeoutInMinutes: 1440
+  dependsOn:
+    - stepName: olc_pr
+      awaitOutputProperties: true
+  properties:
+    PRODUCT: open-liberty
+    PIPELINE: "yes"
+    scriptOrg: "websphere-sps"
+    scriptRepoName: "liberty-pipeline-config"
+    scriptBranch: "${pipeline-config-branch}"
+    appRepoUrl: "${app-repo}"
+    appRepoSHA: "${olc_pr:appRepoSha}"
+    appRepoSha: "${olc_pr:appRepoSha}"
+    VERSIONS: "${olc_pr:VERSIONS}"
+    REPOS: "${olc_pr:REPOS}"
+    buildType: "${olc_pr:buildType}"
+    downloadUrl: "${olc_pr:downloadUrl}"
+    buildLabel: "${olc_pr:buildLabel}"
+    releaseVersion: "${olc_pr:releaseVersion}"
+    betaVersion: "${olc_pr:betaVersion}"
+    imageTypeTags: "${olc_pr:imageTypeTags}"
+    buildUbi9Minimal: "${olc_pr:buildUbi9Minimal}"
+    ebcShortlist: "jenkinsbuild-docker-ubuntu22_arm64.yml"
