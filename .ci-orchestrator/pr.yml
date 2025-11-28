@@ -11,14 +11,14 @@ triggers:
     steps:
     - stepName: olc_pr
   - name: prNumber
-  - name: VERSIONS
-    defaultValue: latest
   - name: pipeline-config-repo
     defaultValue: https://github.ibm.com/websphere-sps/liberty-pipeline-config.git
   - name: pipeline-config-branch
     defaultValue: main
   - name: app-repo
     defaultValue: "https://github.com/gkertasef/ci.docker.git"
+  - name: VERSIONS
+    defaultValue: latest
   - name: LIBERTY_BUILD_LABEL
     defaultValue: "cl251120251020-0302"
   - name: LIBERTY_VERSION
