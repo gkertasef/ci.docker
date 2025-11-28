@@ -2,7 +2,7 @@ type: pipeline_definition
 name: Testing SPS PR Pipeline
 description: "Runs a set of compliance status checks for the gkertasef/ci.docker app repo."
 triggers:
-- type: Manual
+- type: manual
   triggerName: "olc-pr"
   groups: ["LibertyContainersPersonal"]
   propertyDefinitions:
