@@ -6,17 +6,15 @@ triggers:
   triggerName: "olc-pr"
   groups: ["LibertyContainersPersonal"]
   propertyDefinitions:
-  - name: appRepoBranch
-    defaultValue: main
+  - name: prBranch
     steps:
     - stepName: olc_pr
+  - name: prOrg
   - name: prNumber
   - name: pipeline-config-repo
     defaultValue: https://github.ibm.com/websphere-sps/liberty-pipeline-config.git
   - name: pipeline-config-branch
     defaultValue: main
-  - name: app-repo
-    defaultValue: "https://github.com/gkertasef/ci.docker.git"
   - name: VERSIONS
     defaultValue: latest
   - name: LIBERTY_BUILD_LABEL
