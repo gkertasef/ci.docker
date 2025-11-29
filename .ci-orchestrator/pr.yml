@@ -34,7 +34,8 @@ steps:
   properties:
     onepipeline_toolchainName: ci-toolchain-openliberty-container
     onepipeline_pipelineName: pr-pipeline
-    branch: ${appRepoBranch}
+    org: ${prOrg}
+    branch: ${prBranch}
     prNumber: ${prNumber}
     VERSIONS: ${VERSIONS}
     pipeline-config: liberty-containers.one-pipeline-pr.yaml
