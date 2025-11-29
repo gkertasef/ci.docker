@@ -6,19 +6,17 @@ triggers:
   triggerName: "olc-pr"
   groups: ["LibertyContainersPersonal"]
   propertyDefinitions:
-  - name: appRepoBranch
-    defaultValue: main
+  - name: prBranch
     steps:
     - stepName: olc_pr
+  - name: prOrg
   - name: prNumber
-  - name: VERSIONS
-    defaultValue: latest
   - name: pipeline-config-repo
     defaultValue: https://github.ibm.com/websphere-sps/liberty-pipeline-config.git
   - name: pipeline-config-branch
     defaultValue: main
-  - name: app-repo
-    defaultValue: "https://github.com/gkertasef/ci.docker.git"
+  - name: VERSIONS
+    defaultValue: latest
   - name: LIBERTY_BUILD_LABEL
     defaultValue: "cl251120251020-0302"
   - name: LIBERTY_VERSION
@@ -36,7 +34,8 @@ steps:
   properties:
     onepipeline_toolchainName: ci-toolchain-openliberty-container
     onepipeline_pipelineName: pr-pipeline
-    branch: ${appRepoBranch}
+    org: ${prOrg}
+    branch: ${prBranch}
     prNumber: ${prNumber}
     VERSIONS: ${VERSIONS}
     pipeline-config: liberty-containers.one-pipeline-pr.yaml
