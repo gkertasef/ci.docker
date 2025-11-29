@@ -30,7 +30,7 @@ triggers:
 steps:
 - stepName: olc_pr
   workType: One Pipeline
-  projectName: "Test PR"
+  projectName: "Test PR - Manual"
   timeoutInMinutes: 1440
   properties:
     onepipeline_toolchainName: ci-toolchain-openliberty-container
